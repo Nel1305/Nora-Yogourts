@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Ma Boutique</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+<div id="loader"><div class="spinner"></div></div>
+
+<!-- ── LOGIN ── -->
+<div id="loginScreen" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg)">
+  <div style="background:var(--s1);border:1px solid var(--b1);border-radius:var(--r-xl);padding:40px;width:100%;max-width:380px;box-shadow:0 8px 32px rgba(0,0,0,.08)">
+    <div style="text-align:center;margin-bottom:28px">
+      <div style="width:56px;height:56px;border-radius:50%;background:var(--primary);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-size:1.4rem;font-weight:800;color:#fff">A</div>
+      <div style="font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:800;color:var(--primary)">Espace Vendeuse</div>
+      <div style="font-size:.82rem;color:var(--t2);margin-top:4px">Connecte-toi pour gérer ta boutique</div>
+    </div>
+    <div class="field"><label for="lEmail">Email</label><input type="email" id="lEmail" placeholder="ton@email.com" autocomplete="email" maxlength="150"></div>
+    <div class="field"><label for="lPass">Mot de passe</label><input type="password" id="lPass" placeholder="••••••••" autocomplete="current-password" maxlength="100"></div>
+    <button class="btn-primary" id="loginBtn" style="margin-top:4px">Se connecter</button>
+    <div style="text-align:center;margin-top:16px">
+      <a href="../index.html" style="font-size:.78rem;color:var(--t3);text-decoration:none">← Voir la boutique</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── APP ── -->
+<div id="appShell" class="admin-app" style="display:none">
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-name" id="sidebarShopName">Ma Boutique</div>
+      <div class="sidebar-logo-sub">Espace vendeuse</div>
+    </div>
+
+    <nav class="admin-nav">
+      <span class="nav-section-label">Général</span>
+      <button class="admin-nav-item active" data-page="dashboard">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Tableau de bord
+      </button>
+
+      <span class="nav-section-label">Ventes</span>
+      <button class="admin-nav-item" data-page="orders">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        Commandes
+      </button>
+      <button class="admin-nav-item" data-page="products">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Mes produits
+      </button>
+
+      <span class="nav-section-label">Communication</span>
+      <button class="admin-nav-item" data-page="chat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Messages clientes
+      </button>
+
+      <span class="nav-section-label">Boutique</span>
+      <button class="admin-nav-item" data-page="theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+        Personnaliser
+      </button>
+      <button class="admin-nav-item" data-page="settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Paramètres
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../index.html" target="_blank" class="sidebar-shop-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Voir ma boutique
+      </a>
+      <button class="logout-btn" id="logoutBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Se déconnecter
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+
+    <!-- DASHBOARD -->
+    <div id="page-dashboard" class="admin-page active">
+      <div class="admin-page-title">Tableau de bord</div>
+      <div class="admin-page-desc">Vue d'ensemble de ta boutique</div>
+      <div class="stats-grid" id="dashStats"></div>
+      <div style="font-size:.84rem;font-weight:600;color:var(--t1);margin-bottom:12px">Dernières commandes</div>
+      <div id="dashRecentOrders"></div>
+    </div>
+
+    <!-- COMMANDES -->
+    <div id="page-orders" class="admin-page">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+        <div>
+          <div class="admin-page-title">Commandes</div>
+          <div class="admin-page-desc">Gérer les commandes reçues</div>
+        </div>
+        <select class="select-sm" id="orderStatusFilter">
+          <option value="all">Toutes</option>
+          <option value="new">Nouvelles</option>
+          <option value="confirmed">Confirmées</option>
+          <option value="delivered">Livrées</option>
+          <option value="cancelled">Annulées</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Code</th><th>Cliente</th><th>Adresse</th><th>Articles</th><th>Total</th><th>Statut</th><th>Chat</th></tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PRODUITS -->
+    <div id="page-products" class="admin-page">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+        <div>
+          <div class="admin-page-title">Mes produits</div>
+          <div class="admin-page-desc">Ajouter, modifier, gérer ta gamme</div>
+        </div>
+        <button class="btn-primary" id="addProductBtn" style="width:auto;padding:9px 20px">+ Ajouter un produit</button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Photo</th><th>Produit</th><th>Catégorie</th><th>Prix</th><th>Dispo</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="productsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CHAT -->
+    <div id="page-chat" class="admin-page">
+      <div class="admin-page-title">Messages clientes</div>
+      <div class="admin-page-desc">Discute avec tes clientes par commande</div>
+      <div class="chat-wrap" style="margin-top:16px">
+        <div class="chat-sidebar-admin">
+          <div class="chat-sidebar-title">Conversations</div>
+          <div class="chat-conv-list" id="convList"></div>
+        </div>
+        <div class="chat-main-area">
+          <div class="chat-header-admin">
+            <div>
+              <div class="chat-header-name" id="chatHeaderName">Sélectionne une commande</div>
+              <div class="chat-header-code" id="chatHeaderCode"></div>
+            </div>
+          </div>
+          <div class="chat-messages" id="chatMsgs">
+            <div class="chat-empty-state">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <p>Sélectionne une commande</p>
+            </div>
+          </div>
+          <div class="chat-input-area">
+            <textarea class="chat-input" id="chatInput" placeholder="Écrire un message… (Entrée pour envoyer)" rows="1" maxlength="1000"></textarea>
+            <button class="chat-send" id="chatSendBtn" aria-label="Envoyer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERSONNALISATION -->
+    <div id="page-theme" class="admin-page">
+      <div class="admin-page-title">Personnaliser ma boutique</div>
+      <div class="admin-page-desc">Choisis tes couleurs, ton logo et ton nom — visible immédiatement par tes clientes</div>
+      <div style="max-width:540px">
+        <!-- Aperçu -->
+        <div class="theme-preview" id="themePreview" style="background:var(--primary)">
+          <div class="theme-preview-name" id="themePreviewName">Ma Boutique</div>
+          <div class="theme-preview-slogan" id="themePreviewSlogan">Ton slogan ici…</div>
+        </div>
+
+        <!-- Couleur principale -->
+        <div class="field">
+          <label>Couleur principale</label>
+          <div class="color-picker-wrap">
+            <input type="color" id="colorPicker" value="#C9845A">
+            <input type="text" class="color-hex-input" id="colorHexInput" placeholder="#C9845A" maxlength="7">
+            <span style="font-size:.78rem;color:var(--t3)">Code hexadécimal</span>
+          </div>
+          <div class="hint">Toutes les couleurs de ta boutique seront dérivées de cette couleur automatiquement.</div>
+        </div>
+
+        <!-- Logo -->
+        <div class="field">
+          <label>Logo de ta boutique</label>
+          <div class="logo-upload">
+            <input type="file" id="logoFileInput" accept="image/*">
+            <div class="logo-upload-text">Clique pour importer ton logo</div>
+            <div class="logo-upload-hint">JPG, PNG · Max 2 Mo · Idéal : image carrée</div>
+          </div>
+          <img id="logoPreview" class="logo-preview" alt="Logo aperçu">
+        </div>
+
+        <!-- Nom & slogan -->
+        <div class="field">
+          <label for="shopNameInput">Nom de ta boutique</label>
+          <input type="text" id="shopNameInput" placeholder="Ex : Les Délices de Marie" maxlength="60">
+        </div>
+        <div class="field">
+          <label for="shopSloganInput">Slogan (optionnel)</label>
+          <input type="text" id="shopSloganInput" placeholder="Ex : Fait maison avec amour ❤" maxlength="100">
+        </div>
+
+        <button class="btn-primary" id="saveThemeBtn">Enregistrer et appliquer</button>
+      </div>
+    </div>
+
+    <!-- PARAMÈTRES -->
+    <div id="page-settings" class="admin-page">
+      <div class="admin-page-title">Paramètres</div>
+      <div class="admin-page-desc">Sécurité et configuration du compte</div>
+      <div style="max-width:400px">
+        <div style="font-size:.84rem;font-weight:600;margin-bottom:14px;color:var(--t1)">Changer le mot de passe</div>
+        <div class="field">
+          <label for="newPassInput">Nouveau mot de passe</label>
+          <input type="password" id="newPassInput" placeholder="Min. 6 caractères" maxlength="100" autocomplete="new-password">
+        </div>
+        <button class="btn-primary" onclick="changePassword()" style="width:auto;padding:9px 22px">Mettre à jour</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODAL : Ajouter produit -->
+<div class="admin-overlay" id="addProductModal">
+  <div class="admin-modal">
+    <button class="modal-x" data-close="addProductModal" aria-label="Fermer">✕</button>
+    <div class="modal-title">Ajouter un produit</div>
+    <div class="modal-sub">Il sera visible immédiatement sur ta boutique</div>
+    <form id="addProductForm" onsubmit="return false">
+      <div class="field">
+        <label>Photo du produit</label>
+        <div class="photo-upload">
+          <input type="file" id="apPhoto" accept="image/*">
+          <div id="apPhotoPlaceholder">
+            <div style="font-size:1.4rem;margin-bottom:5px">📷</div>
+            <div style="font-size:.82rem;color:var(--t2)">Clique ou glisse une photo</div>
+            <div style="font-size:.72rem;color:var(--t3);margin-top:3px">JPG, PNG · Max 5 Mo</div>
+          </div>
+          <img id="apPhotoPreview" class="photo-preview" alt="">
+        </div>
+      </div>
+      <div class="field"><label for="apName">Nom du produit *</label><input type="text" id="apName" placeholder="Ex : Yaourt nature maison" maxlength="100"></div>
+      <div class="field"><label for="apDesc">Description</label><textarea id="apDesc" placeholder="Ingrédients, poids, goût, conservation…" maxlength="400"></textarea></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="field">
+          <label for="apCat">Catégorie</label>
+          <select id="apCat">
+            <option value="Yaourts">Yaourts</option>
+            <option value="Desserts">Desserts</option>
+            <option value="Boissons">Boissons</option>
+            <option value="Plats cuisinés">Plats cuisinés</option>
+            <option value="Cosmétiques">Cosmétiques</option>
+            <option value="Soins">Soins</option>
+            <option value="Autres">Autres</option>
+          </select>
+        </div>
+        <div class="field"><label for="apPrice">Prix (FCFA) *</label><input type="number" id="apPrice" placeholder="1500" min="1" max="9999999"></div>
+      </div>
+      <button class="btn-primary" id="saveProductBtn" style="margin-top:8px">Publier le produit</button>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL : Modifier produit -->
+<div class="admin-overlay" id="editProductModal">
+  <div class="admin-modal">
+    <button class="modal-x" data-close="editProductModal" aria-label="Fermer">✕</button>
+    <div class="modal-title">Modifier le produit</div>
+    <input type="hidden" id="editPId">
+    <div class="field">
+      <label>Photo</label>
+      <div class="photo-upload">
+        <input type="file" id="editPhoto" accept="image/*">
+        <div id="editPhotoPlaceholder"><div style="font-size:1.2rem;margin-bottom:4px">📷</div><div style="font-size:.78rem;color:var(--t2)">Changer la photo</div></div>
+        <img id="editPhotoPreview" class="photo-preview" alt="">
+      </div>
+    </div>
+    <div class="field"><label for="editName">Nom *</label><input type="text" id="editName" maxlength="100"></div>
+    <div class="field"><label for="editDesc">Description</label><textarea id="editDesc" maxlength="400"></textarea></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="field">
+        <label for="editCat">Catégorie</label>
+        <select id="editCat">
+          <option value="Yaourts">Yaourts</option>
+          <option value="Desserts">Desserts</option>
+          <option value="Boissons">Boissons</option>
+          <option value="Plats cuisinés">Plats cuisinés</option>
+          <option value="Cosmétiques">Cosmétiques</option>
+          <option value="Soins">Soins</option>
+          <option value="Autres">Autres</option>
+        </select>
+      </div>
+      <div class="field"><label for="editPrice">Prix (FCFA) *</label><input type="number" id="editPrice" min="1" max="9999999"></div>
+    </div>
+    <button class="btn-primary" id="saveEditBtn" style="margin-top:8px">Sauvegarder</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-title" id="toastTitle"></div>
+  <div class="toast-msg"   id="toastMsg"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
+<script src="../js/config.js"></script>
+<script src="../js/db.js"></script>
+<script src="../js/admin.js"></script>
+</body>
+</html>
